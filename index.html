@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Realtime Pressure Monitor</title>
+
+  <!-- Heatmap.js (ถ้าใช้) -->
+  <script src="https://cdn.jsdelivr.net/npm/heatmap.js@2.0.5/build/heatmap.min.js"></script>
+
+  <!-- Firebase Compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <!-- Chart.js และ adapter สำหรับ date-fns -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+  /* Container หลักแบ่งสองฝั่ง ซ้าย/ขวา */
+    #mainContainer {
+      display: flex;
+      max-width: 1100px;
+      margin: 0 auto;
+      gap: 30px;
+    }
+
+  /* ฝั่งซ้าย */
+    #leftPanel {
+      flex: 1;
+    /* ให้เต็มพื้นที่ฝั่งซ้าย */
+    }
+
+  /* ฝั่งขวา */
+    #rightPanel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+  /* Heatmap container ขนาดพอดี */
+    #heatmapContainer {
+      width: 600px;               /* กำหนดขนาดกรอบให้เท่าภาพ */
+      height: 600px;
+      position: relative;
+      border: 1px solid #ccc;
+      background-image: url('body.jpg');   /* อย่าลืมเปลี่ยนชื่อถ้าใช้ชื่ออื่น */
+      background-repeat: no-repeat;
+      background-size: 100% 100%;          /* ทำให้ภาพพอดีกับ container */
+      background-position: center center;
+    }
+
+    #backgroundImage, #heatmapCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: 0;
+      display: block;
+    }
+
+    #backgroundImage {
+      object-fit: contain;
+      z-index: 0;
+    }
+
+    #heatmapCanvas {
+      z-index: 1;
+    }
+
+    #tooltip {
+      position: absolute;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: none;
+      pointer-events: none;
+      font-size: 14px;
+      z-index: 2;
+    }
+
+  /* ค่าของ sensor */
+    .sensor-value {
+      padding: 10px;
+      margin: 5px 0;
+      background-color: #eee;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+  /* Legend */
+    .legend {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .legend-box {
+      text-align: left;
+    }
+
+    .color-box {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      margin-right: 8px;
+      border: 1px solid #000;
+    }
+
+  /* กราฟ ฝั่งขวา */
+    #pressureChart {
+      width: 100% !important;
+      height: 300px !important;
+      max-width: 1200px;
+    }
+
+    #chartsContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    #chartsContainer canvas {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      width: 100% !important;
+      height: 300px !important;
+    }
+
+    #rightPanel canvas {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    #chartsContainer > div {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h2>Realtime Pressure Monitor</h2>
+
+  <div id="mainContainer">
+    <div id="leftPanel">
+      <div id="heatmapContainer">
+        <img id="backgroundImage" src="body.jpg" alt="Body Image" />
+        <canvas id="heatmapCanvas" width="600" height="600"></canvas>
+        <div id="tooltip"></div>
+      </div>
+
+      <div class="legend">
+        <p><strong>Pressure Zones</strong></p>
+        <div class="legend-box">
+          <div><span class="color-box" style="background-color: gray;"></span> undefined</div>
+          <div><span class="color-box" style="background-color: green;"></span> 0.1 - 31.9 mmHg</div>
+          <div><span class="color-box" style="background-color: yellow;"></span> 32 - 70 mmHg</div>
+          <div><span class="color-box" style="background-color: red;"></span> &gt; 70 mmHg</div>
+        </div>
+      </div>
+
+      <div id="sensor1" class="sensor-value">KneeLeft: 0</div>
+      <div id="sensor2" class="sensor-value">Bottom: 0</div>
+      <div id="sensor3" class="sensor-value">KneeRight: 0</div>
+    </div>
+
+  <div id="rightPanel">
+    <div id="chartsContainer">
+      <div>
+        <h3>KneeLeft Pressure History</h3>
+        <canvas id="chartKneeLeft"></canvas>
+      </div>
+      <div>
+        <h3>Bottom Pressure History</h3>
+        <canvas id="chartBottom"></canvas>
+      </div>
+      <div>
+        <h3>KneeRight Pressure History</h3>
+        <canvas id="chartKneeRight"></canvas>
+      </div>
+    </div>
+  </div>
+  <!-- 👇 เชื่อม script.js -->
+  <script src="script.js" defer></script>
+</body>
+</html>
