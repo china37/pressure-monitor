@@ -227,19 +227,16 @@ document.addEventListener("DOMContentLoaded", function () {
                   hour: 'HH:mm',
               }
             },
-            grid: {
-              display: true,
-              drawTicks: true,
-              drawOnChartArea: true,
-              tickLength: 5,
-              color: 'rgba(0, 0, 0, 0.1)', // เปลี่ยนสีเส้นกริด
-              lineWidth: 1,                // ความหนาเส้นกริด
-            },
             ticks: {
-              source: 'auto',
-              autoSkip: false,
-              maxTicksLimit: 24,
-              stepSize: 1
+              autoSkip: false,       // อย่า skip label เอง
+              maxTicksLimit: 24,     // ไม่บังคับเสมอ แต่ช่วยให้มี tick ไม่เกิน 24 ช่อง (24 ชม.)
+              callback: function(value) {
+                const date = new Date(value);
+                return date.getHours().toString().padStart(2, '0') + ':00';
+              }
+            },
+            grid: {
+              display: true
             },
             min: currenHour,
             max: endTime,
