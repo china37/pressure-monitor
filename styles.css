@@ -16,7 +16,7 @@ h2 {
   justify-content: center;
   align-items: stretch;
   gap: 40px;
-  max-width: 1600px;
+  max-width: 1200px;
   margin: 0 auto;
   padding-top: 20px;
 }
@@ -33,7 +33,7 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  max-width: 1000px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
@@ -102,7 +102,7 @@ h2 {
 /* Chart */
 #pressureChart {
   width: 100%;
-  max-width: 1000px;
+  max-width: 600px;
   height: 300px;
 }
 
@@ -110,7 +110,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  max-width: 1000px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
