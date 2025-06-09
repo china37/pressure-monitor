@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             },
             tick: {
-              source: 'auto',
+              source: 'data',
               autoSkip: false
             },
             min: currenHour,
@@ -239,13 +239,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           },
           y: {
+            beginAtZero: true,
             min: 0,
             max: 200,
             title: {
               display: true,
               text: 'Pressure (mmHg)'
-            },
-            beginAtZero: true 
+            }
           }
         },
         plugins: {
