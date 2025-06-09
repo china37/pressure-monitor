@@ -102,7 +102,7 @@ h2 {
 /* Chart */
 #pressureChart {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1500px;
   height: 300px;
 }
 
@@ -110,7 +110,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
 }
 
