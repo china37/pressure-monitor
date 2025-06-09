@@ -222,11 +222,14 @@ document.addEventListener("DOMContentLoaded", function () {
             time: {
               unit: 'hour',
               tooltipFormat: 'HH:mm',
+              stepSize: 1,
               displayFormats: {
-                  minute: 'HH:mm',
                   hour: 'HH:mm',
-              },
-              stepSize: 1
+              }
+            },
+            tick: {
+              source: 'auto',
+              autoSkip: false
             },
             min: currenHour,
             max: endTime,
@@ -237,7 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           y: {
             min: 0,
-            max: 150,
+            max: 200,
             title: {
               display: true,
               text: 'Pressure (mmHg)'
