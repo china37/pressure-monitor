@@ -118,7 +118,7 @@ h2 {
   background: white;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  width: 1200px !important;
+  width: 100% !important;
   height: 300px !important;
 }
 
