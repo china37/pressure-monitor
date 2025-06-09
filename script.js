@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           y: {
             min: 0,
-            max: 300,
+            max: 150,
             title: {
               display: true,
               text: 'Pressure (mmHg)'
