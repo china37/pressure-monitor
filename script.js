@@ -231,6 +231,8 @@ document.addEventListener("DOMContentLoaded", function () {
               stepSize: 1,
               source: 'linear',
               autoSkip: false,
+              maxRotation: 0,
+              minRotation: 0,
               maxTicksLimit: 24, // แสดงสูงสุด 24 ชั่วโมง
               callback: function(value, index, ticks) {
                 const date = new Date(value);
