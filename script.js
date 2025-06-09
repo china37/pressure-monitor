@@ -230,7 +230,8 @@ document.addEventListener("DOMContentLoaded", function () {
             ticks: {
               source: 'auto',
               autoSkip: false,
-              maxTicksLimit: 24
+              maxTicksLimit: 24,
+              stepSize: 1
             },
             min: currenHour,
             max: endTime,
@@ -243,7 +244,6 @@ document.addEventListener("DOMContentLoaded", function () {
             beginAtZero: true,
             min: 0,
             max: 160,
-            stepSize: 20,
             title: {
               display: true,
               text: 'Pressure (mmHg)'
