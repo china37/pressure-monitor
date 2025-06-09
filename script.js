@@ -225,7 +225,8 @@ document.addEventListener("DOMContentLoaded", function () {
               displayFormats: {
                   minute: 'HH:mm',
                   hour: 'HH:mm',
-              }
+              },
+              stepSize: 1
             },
             min: currenHour,
             max: endTime,
