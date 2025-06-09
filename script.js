@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             },
             ticks: {
-              source: 'data',
+              source: 'auto',
               autoSkip: false
             },
             min: currenHour,
