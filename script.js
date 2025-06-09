@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   hour: 'HH:mm',
               }
             },
-            tick: {
+            ticks: {
               source: 'data',
               autoSkip: false
             },
