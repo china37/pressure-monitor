@@ -227,6 +227,14 @@ document.addEventListener("DOMContentLoaded", function () {
                   hour: 'HH:mm',
               }
             },
+            grid: {
+              display: true,
+              drawTicks: true,
+              drawOnChartArea: true,
+              tickLength: 5,
+              color: 'rgba(0, 0, 0, 0.1)', // เปลี่ยนสีเส้นกริด
+              lineWidth: 1,                // ความหนาเส้นกริด
+            },
             ticks: {
               source: 'auto',
               autoSkip: false,
