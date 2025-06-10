@@ -239,7 +239,8 @@ document.addEventListener("DOMContentLoaded", function () {
               maxTicksLimit: 24, // แสดงสูงสุด 24 ชั่วโมง
               callback: function(value, index, ticks) {
                 const date = new Date(value);
-                return date.getMinutes() === 0 ? date.getHours().toString().padStart(2, '0') + ':00' : ''; // แสดงแค่ชั่วโมงที่มีค่าเป็น 0 นาที
+                const minutes = date.getMinutes();
+                return minutes === 0 ? date.getHours().toString().padStart(2, '0') + ':00' : ''; // แสดงแค่ชั่วโมงที่เป็น 00 นาที
               }
             },
             min: currenHour,
