@@ -16,7 +16,7 @@ h2 {
   height: 100vh;
   margin: 0 auto;
   gap: 40px;
-  max-width: 1550px; /* กำหนดความกว้างสูงสุด */
+  max-width: 1600px; /* กำหนดความกว้างสูงสุด */
 }
 
 /* Panel ซ้าย */
