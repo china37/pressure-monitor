@@ -503,12 +503,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (middleValue !== undefined) tryAdd('Bottom', middleValue, time);
         if (rightValue !== undefined) tryAdd('KneeRight', rightValue, time);
       });
-      console.log("Loaded:", {
-        time: entry.actualTime,
-        KneeLeft: convertRawToMmHg(entry.KneeLeft),
-        Bottom: convertRawToMmHg(entry.Bottom),
-        KneeRight: convertRawToMmHg(entry.KneeRight),
-      });
+    
   }
 
 
